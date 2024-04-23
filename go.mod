@@ -1,4 +1,4 @@
-module github.com/TropicalDog17/mm-bot
+module github.com/TropicalDog17/orderbook-go-sdk
 
 go 1.22.1
 

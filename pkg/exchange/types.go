@@ -11,8 +11,8 @@ import (
 	"strings"
 
 	exchangeclient "github.com/InjectiveLabs/sdk-go/client/exchange"
-	"github.com/TropicalDog17/mm-bot/internal/chain"
-	types "github.com/TropicalDog17/mm-bot/internal/types"
+	"github.com/TropicalDog17/orderbook-go-sdk/internal/chain"
+	types "github.com/TropicalDog17/orderbook-go-sdk/internal/types"
 )
 
 var _ CronosClient = (*MbClient)(nil)

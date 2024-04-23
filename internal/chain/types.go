@@ -5,7 +5,7 @@ import (
 
 	chainclient "github.com/InjectiveLabs/sdk-go/client/chain"
 	"github.com/InjectiveLabs/sdk-go/client/common"
-	"github.com/TropicalDog17/mm-bot/internal/types"
+	"github.com/TropicalDog17/orderbook-go-sdk/internal/types"
 	cosmclient "github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cosmtypes "github.com/cosmos/cosmos-sdk/types"

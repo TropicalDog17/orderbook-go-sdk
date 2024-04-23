@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
-	"github.com/TropicalDog17/mm-bot/internal/types"
+	"github.com/TropicalDog17/orderbook-go-sdk/internal/types"
 	"github.com/google/uuid"
 )
 
