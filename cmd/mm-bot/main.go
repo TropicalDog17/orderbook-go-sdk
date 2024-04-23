@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
-	"github.com/TropicalDog17/mm-bot/internal/exchange"
 	"github.com/TropicalDog17/mm-bot/internal/types"
+	"github.com/TropicalDog17/mm-bot/pkg/exchange"
 	"github.com/joho/godotenv"
 	"github.com/shopspring/decimal"
 )
