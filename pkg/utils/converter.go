@@ -1,4 +1,4 @@
-package exchange
+package utils
 
 import (
 	"cosmossdk.io/math"

@@ -1,6 +1,7 @@
 package chain
 
 import (
+	"fmt"
 	"os"
 
 	chainclient "github.com/InjectiveLabs/sdk-go/client/chain"
@@ -42,6 +43,7 @@ func NewChainClient(keyName string) ChainClient {
 		senderAddress.String(),
 		cosmosKeyring,
 	)
+	fmt.Println("senderAddress: ", senderAddress.String())
 	if err != nil {
 		panic(err)
 	}

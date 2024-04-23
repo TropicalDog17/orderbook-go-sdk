@@ -6,6 +6,7 @@ import (
 
 	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
 	"github.com/TropicalDog17/orderbook-go-sdk/internal/types"
+	utils "github.com/TropicalDog17/orderbook-go-sdk/pkg/utils"
 	"github.com/google/uuid"
 )
 
@@ -26,8 +27,8 @@ func (c *MbClient) PlaceSpotOrder(order types.SpotOrder) error {
 		MarketId:  "0xfbd55f13641acbb6e69d7b59eb335dabe2ecbfea136082ce2eedaba8a0c917a3",
 		OrderInfo: exchangetypes.OrderInfo{
 			SubaccountId: defaultSubaccountID.String(),
-			Price:        PriceToChainFormat(order.Price, baseDecimal, quoteDecimal),
-			Quantity:     QuantityToChainFormat(order.Quantity, baseDecimal),
+			Price:        utils.PriceToChainFormat(order.Price, baseDecimal, quoteDecimal),
+			Quantity:     utils.QuantityToChainFormat(order.Quantity, baseDecimal),
 			Cid:          uuid.NewString(),
 		},
 	}
