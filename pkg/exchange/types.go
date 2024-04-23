@@ -12,8 +12,8 @@ import (
 
 	exchangeclient "github.com/InjectiveLabs/sdk-go/client/exchange"
 	configtypes "github.com/TropicalDog17/orderbook-go-sdk/config"
-	"github.com/TropicalDog17/orderbook-go-sdk/internal/chain"
 	types "github.com/TropicalDog17/orderbook-go-sdk/internal/types"
+	"github.com/TropicalDog17/orderbook-go-sdk/pkg/chain"
 )
 
 var _ CronosClient = (*MbClient)(nil)
