@@ -5,7 +5,7 @@ import (
 
 	chainclient "github.com/InjectiveLabs/sdk-go/client/chain"
 	"github.com/InjectiveLabs/sdk-go/client/common"
-	"github.com/TropicalDog17/orderbook-go-sdk/internal/types"
+	"github.com/TropicalDog17/orderbook-go-sdk/config"
 	cosmclient "github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/crypto/keyring"
 	cosmtypes "github.com/cosmos/cosmos-sdk/types"
@@ -24,7 +24,7 @@ type ChainClient struct {
 
 // Get chain client with signing key prepared.
 func NewChainClient(keyName string) ChainClient {
-	network := types.DefaultNetwork()
+	network := config.DefaultNetwork()
 	senderAddress, cosmosKeyring, err := chainclient.InitCosmosKeyring(
 		os.Getenv("HOME")+"/.injectived",
 		"injectived",
@@ -72,7 +72,7 @@ func (c *ChainClient) GetInjectiveChainClient() chainclient.ChainClient {
 }
 
 func (c *ChainClient) AdjustKeyring(keyName string) {
-	network := types.DefaultNetwork()
+	network := config.DefaultNetwork()
 	senderAddress, cosmosKeyring, err := chainclient.InitCosmosKeyring(
 		os.Getenv("HOME")+"/.injectived",
 		"injectived",

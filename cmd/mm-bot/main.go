@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
+	configtypes "github.com/TropicalDog17/orderbook-go-sdk/config"
 	"github.com/TropicalDog17/orderbook-go-sdk/internal/types"
 	"github.com/TropicalDog17/orderbook-go-sdk/pkg/exchange"
 	"github.com/joho/godotenv"
@@ -11,7 +12,7 @@ import (
 )
 
 func main() {
-	exchangeClient := exchange.NewMbClient("local", types.DefaultConfig())
+	exchangeClient := exchange.NewMbClient("local", configtypes.DefaultConfig())
 	err := godotenv.Load()
 	if err != nil {
 		panic(err)

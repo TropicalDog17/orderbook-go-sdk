@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	exchangeclient "github.com/InjectiveLabs/sdk-go/client/exchange"
+	configtypes "github.com/TropicalDog17/orderbook-go-sdk/config"
 	"github.com/TropicalDog17/orderbook-go-sdk/internal/chain"
 	types "github.com/TropicalDog17/orderbook-go-sdk/internal/types"
 )
@@ -32,15 +33,15 @@ type CronosClient interface {
 type MbClient struct {
 	exchangeClient exchangeclient.ExchangeClient
 	chainClient    *chain.ChainClient
-	config         *types.Config
+	config         *configtypes.Config
 }
 
-func NewMbClient(networkType string, config *types.Config) *MbClient {
+func NewMbClient(networkType string, config *configtypes.Config) *MbClient {
 	if networkType != "local" {
 		panic("Only local network type is supported")
 	}
 
-	network := types.DefaultNetwork()
+	network := configtypes.DefaultNetwork()
 	exchangeClient, err := exchangeclient.NewExchangeClient(network)
 	if err != nil {
 		panic(err)

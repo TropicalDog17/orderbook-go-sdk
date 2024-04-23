@@ -1,4 +1,4 @@
-package types
+package config
 
 import (
 	"github.com/InjectiveLabs/sdk-go/client/common"
