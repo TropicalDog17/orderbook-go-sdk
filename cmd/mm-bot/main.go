@@ -38,7 +38,7 @@ func main() {
 		Price:     decimal.NewFromFloat(0.48),
 		Quantity:  decimal.NewFromFloat(0.01),
 	}
-	err = exchangeClient.PlaceSpotOrder(spotOrder)
+	_, err = exchangeClient.PlaceSpotOrder(spotOrder)
 	if err != nil {
 		panic(err)
 	}
