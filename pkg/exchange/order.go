@@ -16,8 +16,8 @@ type OrderMaker interface {
 }
 
 func (c *MbClient) PlaceSpotOrder(order types.SpotOrder) (string, error) {
-	chainClient := c.chainClient.GetInjectiveChainClient()
-	senderAddress := c.chainClient.SenderAddress
+	chainClient := c.ChainClient.GetInjectiveChainClient()
+	senderAddress := c.ChainClient.SenderAddress
 	ctx := context.Background()
 
 	defaultSubaccountID := chainClient.DefaultSubaccount(senderAddress)

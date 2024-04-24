@@ -32,9 +32,9 @@ type CronosClient interface {
 	GetMarketSummary(marketId string) (types.MarketSummary, error)
 }
 type MbClient struct {
-	exchangeClient exchangeclient.ExchangeClient
-	chainClient    *chain.ChainClient
-	config         *configtypes.Config
+	ExchangeClient exchangeclient.ExchangeClient
+	ChainClient    *chain.ChainClient
+	Config         *configtypes.Config
 }
 
 func NewMbClient(networkType string, config *configtypes.Config) *MbClient {
@@ -49,9 +49,9 @@ func NewMbClient(networkType string, config *configtypes.Config) *MbClient {
 	}
 	chainClient := chain.NewChainClient("genesis") // TODO: refactor hard code
 	return &MbClient{
-		exchangeClient: exchangeClient,
-		chainClient:    &chainClient,
-		config:         config,
+		ExchangeClient: exchangeClient,
+		ChainClient:    &chainClient,
+		Config:         config,
 	}
 }
 
@@ -77,7 +77,7 @@ func (c *MbClient) GetMarketSummary(marketId string) (types.MarketSummary, error
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
 	}
 	client := &http.Client{Transport: tr}
-	endpoint := fmt.Sprintf("%s/api/chronos/v1/spot/market_summary?marketId=%s&resolution=24h", c.config.ChronosEndpoint, marketId)
+	endpoint := fmt.Sprintf("%s/api/chronos/v1/spot/market_summary?marketId=%s&resolution=24h", c.Config.ChronosEndpoint, marketId)
 	var marketSummary types.MarketSummary
 	resp, err := client.Get(endpoint)
 
@@ -97,7 +97,7 @@ func (c *MbClient) GetMarketSummary(marketId string) (types.MarketSummary, error
 
 func (c *MbClient) GetSpotMarket(marketId string) (*exchangetypes.SpotMarket, error) {
 	ctx := context.Background()
-	market, err := c.chainClient.GetInjectiveChainClient().FetchChainSpotMarket(ctx, marketId)
+	market, err := c.ChainClient.GetInjectiveChainClient().FetchChainSpotMarket(ctx, marketId)
 	if err != nil {
 		panic(err)
 	}
@@ -115,11 +115,11 @@ func (c *MbClient) GetSpotMarket(marketId string) (*exchangetypes.SpotMarket, er
 // }
 
 func (c *MbClient) GetChainClient() *chain.ChainClient {
-	return c.chainClient
+	return c.ChainClient
 }
 
 func (c *MbClient) GetDecimals(ctx context.Context, marketId string) (baseDecimal, quoteDecimal int32) {
-	market, err := c.exchangeClient.GetSpotMarket(ctx, marketId)
+	market, err := c.ExchangeClient.GetSpotMarket(ctx, marketId)
 	if err != nil {
 		panic(err)
 	}
@@ -141,4 +141,18 @@ func (c *MbClient) GetMarketSummaryFromTicker(ticker string) (types.MarketSummar
 		return types.MarketSummary{}, err
 	}
 	return marketSummary, err
+}
+func (c *MbClient) GetSpotMarketFromTicker(ticker string) (*exchangetypes.SpotMarket, error) {
+	ticker = strings.Replace(ticker, "-", "", -1)
+	ticker = strings.Replace(ticker, "/", "", -1)
+	ticker = strings.ToUpper(ticker)
+	marketId := os.Getenv(ticker)
+	if marketId == "" {
+		return &exchangetypes.SpotMarket{}, fmt.Errorf("marketId not found for ticker %s", ticker)
+	}
+	spotMarket, err := c.GetSpotMarket(marketId)
+	if err != nil {
+		return &exchangetypes.SpotMarket{}, err
+	}
+	return spotMarket, err
 }
