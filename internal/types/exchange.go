@@ -21,3 +21,12 @@ type SpotOrder struct {
 	Price     decimal.Decimal         `json:"price"`
 	Quantity  decimal.Decimal         `json:"quantity"`
 }
+
+func NewSpotOrder(orderType exchangetypes.OrderType, marketId string, price decimal.Decimal, quantity decimal.Decimal) SpotOrder {
+	return SpotOrder{
+		OrderType: orderType,
+		MarketId:  marketId,
+		Price:     price,
+		Quantity:  quantity,
+	}
+}

@@ -10,6 +10,7 @@ import (
 	"os"
 	"strings"
 
+	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
 	exchangeclient "github.com/InjectiveLabs/sdk-go/client/exchange"
 	configtypes "github.com/TropicalDog17/orderbook-go-sdk/config"
 	types "github.com/TropicalDog17/orderbook-go-sdk/internal/types"
@@ -94,6 +95,15 @@ func (c *MbClient) GetMarketSummary(marketId string) (types.MarketSummary, error
 	return marketSummary, nil
 }
 
+func (c *MbClient) GetSpotMarket(marketId string) (*exchangetypes.SpotMarket, error) {
+	ctx := context.Background()
+	market, err := c.chainClient.GetInjectiveChainClient().FetchChainSpotMarket(ctx, marketId)
+	if err != nil {
+		panic(err)
+	}
+	return market.Market, nil
+}
+
 // func (c *MbClient) GetMarketsAssistant() chainclient.MarketsAssistant {
 // 	ctx := context.Background()
 
@@ -116,4 +126,19 @@ func (c *MbClient) GetDecimals(ctx context.Context, marketId string) (baseDecima
 	baseDecimal = market.Market.BaseTokenMeta.Decimals
 	quoteDecimal = market.Market.QuoteTokenMeta.Decimals
 	return baseDecimal, quoteDecimal
+}
+
+func (c *MbClient) GetMarketSummaryFromTicker(ticker string) (types.MarketSummary, error) {
+	ticker = strings.Replace(ticker, "-", "", -1)
+	ticker = strings.Replace(ticker, "/", "", -1)
+	ticker = strings.ToUpper(ticker)
+	marketId := os.Getenv(ticker)
+	if marketId == "" {
+		return types.MarketSummary{}, fmt.Errorf("marketId not found for ticker %s", ticker)
+	}
+	marketSummary, err := c.GetMarketSummary(marketId)
+	if err != nil {
+		return types.MarketSummary{}, err
+	}
+	return marketSummary, err
 }
