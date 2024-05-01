@@ -6,7 +6,7 @@ import (
 	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
 	configtypes "github.com/TropicalDog17/orderbook-go-sdk/config"
 	"github.com/TropicalDog17/orderbook-go-sdk/pkg/exchange"
-	"github.com/TropicalDog17/orderbook-go-sdk/types"
+	"github.com/TropicalDog17/orderbook-go-sdk/pkg/types"
 	"github.com/joho/godotenv"
 	"github.com/shopspring/decimal"
 )

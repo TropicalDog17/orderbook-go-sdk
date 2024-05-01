@@ -15,7 +15,7 @@ import (
 	spotExchangePB "github.com/InjectiveLabs/sdk-go/exchange/spot_exchange_rpc/pb"
 	configtypes "github.com/TropicalDog17/orderbook-go-sdk/config"
 	"github.com/TropicalDog17/orderbook-go-sdk/pkg/chain"
-	types "github.com/TropicalDog17/orderbook-go-sdk/types"
+	customtypes "github.com/TropicalDog17/orderbook-go-sdk/pkg/types"
 )
 
 var _ CronosClient = (*MbClient)(nil)
@@ -30,7 +30,7 @@ type WalletFetcher interface {
 }
 
 type CronosClient interface {
-	GetMarketSummary(marketId string) (types.MarketSummary, error)
+	GetMarketSummary(marketId string) (customtypes.MarketSummary, error)
 }
 type MbClient struct {
 	ExchangeClient exchangeclient.ExchangeClient
@@ -71,7 +71,7 @@ func (c *MbClient) GetPrice(ticker string) (float64, error) {
 	return marketSummary.Price, nil
 }
 
-func (c *MbClient) GetMarketSummary(marketId string) (types.MarketSummary, error) {
+func (c *MbClient) GetMarketSummary(marketId string) (customtypes.MarketSummary, error) {
 	// TODO: fix hard code
 
 	tr := &http.Transport{
@@ -79,7 +79,7 @@ func (c *MbClient) GetMarketSummary(marketId string) (types.MarketSummary, error
 	}
 	client := &http.Client{Transport: tr}
 	endpoint := fmt.Sprintf("%s/api/chronos/v1/spot/market_summary?marketId=%s&resolution=24h", c.Config.ChronosEndpoint, marketId)
-	var marketSummary types.MarketSummary
+	var marketSummary customtypes.MarketSummary
 	resp, err := client.Get(endpoint)
 
 	if err != nil {
@@ -129,17 +129,17 @@ func (c *MbClient) GetDecimals(ctx context.Context, marketId string) (baseDecima
 	return baseDecimal, quoteDecimal
 }
 
-func (c *MbClient) GetMarketSummaryFromTicker(ticker string) (types.MarketSummary, error) {
+func (c *MbClient) GetMarketSummaryFromTicker(ticker string) (customtypes.MarketSummary, error) {
 	ticker = strings.Replace(ticker, "-", "", -1)
 	ticker = strings.Replace(ticker, "/", "", -1)
 	ticker = strings.ToUpper(ticker)
 	marketId := os.Getenv(ticker)
 	if marketId == "" {
-		return types.MarketSummary{}, fmt.Errorf("marketId not found for ticker %s", ticker)
+		return customtypes.MarketSummary{}, fmt.Errorf("marketId not found for ticker %s", ticker)
 	}
 	marketSummary, err := c.GetMarketSummary(marketId)
 	if err != nil {
-		return types.MarketSummary{}, err
+		return customtypes.MarketSummary{}, err
 	}
 	return marketSummary, err
 }

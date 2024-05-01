@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
+	"github.com/TropicalDog17/orderbook-go-sdk/pkg/types"
 	utils "github.com/TropicalDog17/orderbook-go-sdk/pkg/utils"
-	"github.com/TropicalDog17/orderbook-go-sdk/types"
 	"github.com/google/uuid"
 	"github.com/shopspring/decimal"
 )
