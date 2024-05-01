@@ -12,9 +12,10 @@ import (
 
 	exchangetypes "github.com/InjectiveLabs/sdk-go/chain/exchange/types"
 	exchangeclient "github.com/InjectiveLabs/sdk-go/client/exchange"
+	spotExchangePB "github.com/InjectiveLabs/sdk-go/exchange/spot_exchange_rpc/pb"
 	configtypes "github.com/TropicalDog17/orderbook-go-sdk/config"
-	types "github.com/TropicalDog17/orderbook-go-sdk/internal/types"
 	"github.com/TropicalDog17/orderbook-go-sdk/pkg/chain"
+	types "github.com/TropicalDog17/orderbook-go-sdk/types"
 )
 
 var _ CronosClient = (*MbClient)(nil)
@@ -155,4 +156,12 @@ func (c *MbClient) GetSpotMarketFromTicker(ticker string) (*exchangetypes.SpotMa
 		return &exchangetypes.SpotMarket{}, err
 	}
 	return spotMarket, err
+}
+
+func (c *MbClient) GetActiveMarkets(ctx context.Context, req *spotExchangePB.MarketsRequest) ([]*spotExchangePB.SpotMarketInfo, error) {
+	res, err := c.ExchangeClient.GetSpotMarkets(ctx, req)
+	if err != nil {
+		return nil, err
+	}
+	return res.Markets, nil
 }
